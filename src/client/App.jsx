@@ -65,7 +65,12 @@ class App extends Component {
   }
 
   render() {
-    return <Chart data={this.state.data} />;
+    return (
+      <>
+        <Chart data={this.state.data} />
+        <p>Powered By CoinDesk</p>
+      </>
+    );
   }
 }
 
