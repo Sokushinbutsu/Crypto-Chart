@@ -7,31 +7,65 @@ class App extends Component {
     super(props);
     this.state = {
       bpi: {},
-      time: {}
+      data: {}
     };
   }
 
-  async componentDidMount() {
+  async refreshData() {
     try {
       const res = await Axios.get('/price');
 
-      if (res.statusText !== 'OK') {
-        throw Error(res.statusText);
-      }
+      const { bpi } = res.data;
 
-      const { bpi, time } = res.data;
-
-      this.setState({
-        bpi,
-        time
-      });
+      this.setState({ bpi });
     } catch (error) {
       console.error(error);
     }
   }
 
+  organizeData() {
+    this.setState({
+      data: {
+        labels: Object.keys(this.state.bpi),
+        datasets: [
+          {
+            label: `Bitcoin Price`,
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(255,0,0)',
+            borderColor: 'rgba(255,0,0,0.3)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(255,0,0)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(255,0,0)',
+            pointHoverBorderColor: 'rgba(255,0,0)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: Object.values(this.state.bpi)
+          }
+        ]
+      }
+    });
+  }
+
+  componentDidMount() {
+    this.refreshData()
+      .then(() => {
+        this.organizeData();
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
   render() {
-    return <Chart />;
+    return <Chart data={this.state.data} />;
   }
 }
 

@@ -9,7 +9,9 @@ app.use(express.static('dist'));
 
 app.get('/price', (req, res) => {
   axios
-    .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+    .get(
+      `https://api.coindesk.com/v1/bpi/historical/close.json?start=2013-09-01&end=2013-09-20`
+    )
     .then(({ data }) => {
       res.send(data);
     })
