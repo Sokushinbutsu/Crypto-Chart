@@ -13,9 +13,14 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      Axios.interceptors.response.use(response => response.data);
+      const res = await Axios.get('/price');
 
-      const { bpi, time } = await Axios.get('/price');
+      if (res.statusText !== 'OK') {
+        throw Error(res.statusText);
+      }
+
+      const { bpi, time } = res.data;
+
       this.setState({
         bpi,
         time
