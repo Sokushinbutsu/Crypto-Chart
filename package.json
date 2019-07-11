@@ -1,0 +1,39 @@
+{
+  "name": "crypto-chart",
+  "version": "1.0.0",
+  "description": "Crypto Price Chart",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm dist/bundle.js",
+    "build-dev": "webpack -d --mode development",
+    "build-prod": "webpack -p --mode production",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sokushinbutsu/Crypto-Chart.git"
+  },
+  "keywords": [
+    "bitcoin"
+  ],
+  "author": "Brian Nelson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sokushinbutsu/Crypto-Chart/issues"
+  },
+  "homepage": "https://github.com/Sokushinbutsu/Crypto-Chart#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "nodemon": "^1.19.1",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5"
+  }
+}
