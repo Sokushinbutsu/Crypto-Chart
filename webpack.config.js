@@ -1,24 +1,23 @@
-const webpack = require('webpack');
 const path = require('path');
 
 const config = {
-  entry: './src/client/index.js',
+  entry: './src/client/index.jsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
-  }
+    extensions: ['.js', '.jsx'],
+  },
 };
 
 module.exports = config;

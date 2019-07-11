@@ -64,5 +64,3 @@ typings/
 # production build
 /dist/bundle.js
 
-# static assets
-/dist/favicon.ico

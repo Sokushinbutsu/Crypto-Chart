@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
-import Chart from './components/Chart';
 import Axios from 'axios';
+import Chart from './components/Chart';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bpi: {},
-      data: {}
+      data: {},
     };
+  }
+
+  componentDidMount() {
+    this.refreshData()
+      .then(() => {
+        this.organizeData();
+      })
+      .catch((error) => {
+        throw error;
+      });
   }
 
   async refreshData() {
@@ -19,17 +29,19 @@ class App extends Component {
 
       this.setState({ bpi });
     } catch (error) {
-      console.error(error);
+      Axios.post('/error', {
+        error,
+      });
     }
   }
 
   organizeData() {
-    this.setState({
+    this.setState(state => ({
       data: {
-        labels: Object.keys(this.state.bpi),
+        labels: Object.keys(state.bpi),
         datasets: [
           {
-            label: `Bitcoin Price`,
+            label: 'Bitcoin Price',
             fill: false,
             lineTension: 0.1,
             backgroundColor: 'rgba(255,0,0)',
@@ -47,27 +59,18 @@ class App extends Component {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: Object.values(this.state.bpi)
-          }
-        ]
-      }
-    });
-  }
-
-  componentDidMount() {
-    this.refreshData()
-      .then(() => {
-        this.organizeData();
-      })
-      .catch(err => {
-        console.error(err);
-      });
+            data: Object.values(state.bpi),
+          },
+        ],
+      },
+    }));
   }
 
   render() {
+    const { data } = this.state;
     return (
       <>
-        <Chart data={this.state.data} />
+        <Chart data={data} />
         <p>Powered By CoinDesk</p>
       </>
     );
