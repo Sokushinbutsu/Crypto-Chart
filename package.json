@@ -8,7 +8,9 @@
     "clean": "rm dist/bundle.js",
     "build-dev": "webpack -d --mode development --watch",
     "build-prod": "webpack -p --mode production",
-    "start": "nodemon server.js",
+    "post-install": "webpack",
+    "start-dev": "nodemon server.js",
+    "start": "node server.js",
     "lint": "eslint src/**/*.jsx"
   },
   "repository": {
