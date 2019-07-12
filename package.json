@@ -10,7 +10,11 @@
     "build-prod": "webpack -p --mode production",
     "post-install": "webpack",
     "start-dev": "nodemon server.js",
+<<<<<<< HEAD
     "start": "node server.js",
+=======
+    "start": "nod server.js",
+>>>>>>> 14cd1880105d5964069c369fd334c2f42eab47fb
     "lint": "eslint src/**/*.jsx"
   },
   "repository": {
