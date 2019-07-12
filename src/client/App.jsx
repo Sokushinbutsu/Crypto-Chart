@@ -17,7 +17,7 @@ class App extends Component {
         this.organizeData();
       })
       .catch((error) => {
-        throw error;
+        console.error(error);
       });
   }
 
@@ -31,6 +31,8 @@ class App extends Component {
     } catch (error) {
       Axios.post('/error', {
         error,
+      }).catch((err) => {
+        console.error(err);
       });
     }
   }
