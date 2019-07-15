@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import Chart from './components/Chart';
+import Form from './components/Form';
 
 class App extends Component {
   constructor(props) {
@@ -8,26 +9,28 @@ class App extends Component {
     this.state = {
       bpi: {},
       data: {},
+      start: '',
+      end: '',
     };
+
+    this.handleChangeStart = this.handleChangeStart.bind(this);
+    this.handleChangeEnd = this.handleChangeEnd.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.refreshData()
-      .then(() => {
-        this.organizeData();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
 
   async refreshData() {
     try {
-      const res = await Axios.get('/price');
+      const { start, end } = this.state;
+      if (start !== '' && end !== '') {
+        const res = await Axios.post('/price', {
+          start, end,
+        });
+        const { bpi } = res.data;
 
-      const { bpi } = res.data;
-
-      this.setState({ bpi });
+        this.setState({ bpi });
+        this.organizeData();
+      }
     } catch (error) {
       Axios.post('/error', {
         error,
@@ -68,12 +71,32 @@ class App extends Component {
     }));
   }
 
+  handleChangeStart(event) {
+    this.setState({ start: event.target.value });
+  }
+
+  handleChangeEnd(event) {
+    this.setState({ end: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.refreshData();
+  }
+
   render() {
-    const { data } = this.state;
+    const { data, start, end } = this.state;
     return (
       <>
         <Chart data={data} />
         <p>Powered By CoinDesk</p>
+        <Form
+          handleSubmit={this.handleSubmit}
+          handleChangeStart={this.handleChangeStart}
+          handleChangeEnd={this.handleChangeEnd}
+          start={start}
+          end={end}
+        />
       </>
     );
   }

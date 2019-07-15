@@ -3,14 +3,22 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const axios = require('axios');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 app.use(express.static('dist'));
+app.use(bodyParser.json());
+app.use(morgan());
 
-app.get('/price', (req, res) => {
+app.post('/price', (req, res) => {
+  console.log(req.body);
   axios
-    .get(
-      'https://api.coindesk.com/v1/bpi/historical/close.json?start=2013-09-01&end=2013-09-20',
-    )
+    .get('https://api.coindesk.com/v1/bpi/historical/close.json', {
+      params: {
+        start: req.body.start,
+        end: req.body.end,
+      },
+    })
     .then(({ data }) => {
       res.send(data);
     })

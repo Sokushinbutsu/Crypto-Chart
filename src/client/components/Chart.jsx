@@ -8,11 +8,7 @@ const Chart = (props) => {
 };
 
 Chart.propTypes = {
-  data: PropTypes.objectOf(Object),
-};
-
-Chart.defaultProps = {
-  data: {},
+  data: PropTypes.objectOf(Object).isRequired,
 };
 
 export default Chart;
