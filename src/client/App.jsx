@@ -89,7 +89,7 @@ class App extends Component {
     return (
       <>
         <Chart data={data} />
-        <p>Powered By CoinDesk</p>
+        <p>Powered By CoinDesk and Heroku</p>
         <Form
           handleSubmit={this.handleSubmit}
           handleChangeStart={this.handleChangeStart}
